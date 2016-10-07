@@ -1,13 +1,13 @@
 # galaxy-import-role
 
-Automate importing one or more roles to Galaxy. By-passes the Galaxy CLI and uses the API directly.
+Automate importing one or more roles to Galaxy by using the API directly. Does not rely on the ansible-galaxy CLI tool, but instead call Galaxy API endpoints directly.
 
 
 ## Requirements
 
-Uses the Ansible uri module to make requests to the Galaxy API. In versions of Ansible prior to 2.1 this required httplib2. 
+Uses the Ansible uri module to make requests to the Galaxy API. In versions of Ansible prior to 2.1 this required httplib2. With newer versions of Anaible the uri module should just work.
 
-Authentication to Galaxy via its API requires a [GitHub personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
+Authentication to the Galaxy API requires a [GitHub personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 
 
 ## Role Variables
@@ -22,19 +22,19 @@ github_token
 > Your GitHub personal access token.
 
 github_repos
-> List of repos with namespace, repo and reference attributes. The reference attribute is optionally. Set to a valid GitHub branch name. 
+> List of repos with namespace, repo and reference attributes. The reference attribute is optional, and can be used to specify a GitHub branch.
 
 galaxy_wait
-> Whether or not to wait on the import results. Defaults to *yes*.
+> Whether or not to wait on the import results. Defaults to *true*.
 
 galaxy_assert_success
-> Whether or not to fail when an import fails. Used only when `galaxy_wait` is *true*. Defaults to *yes*. 
+> Whether or not to fail when an import fails. Used only when `galaxy_wait` is *true*. Defaults to *true*. 
 
 ## Dependencies
 
 None.
 
-## Example Playbook
+## Examples
 
 Run this role with the following example playbook: 
 
@@ -49,8 +49,8 @@ Run this role with the following example playbook:
           github_token: < your GitHub personal access token here > 
           github_repos:
             - namespace: chouseknecht
-              name: ansible-role-autoimport 
-``` 
+              name: ansible-role-autoimport
+```
 
 ## License
 
