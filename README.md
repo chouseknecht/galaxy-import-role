@@ -43,7 +43,6 @@ Run this role with the following example playbook:
       hosts: localhost
       connection: local
       gather_facts: no
-      vars:
       roles:
         - role: galaxy-import
           github_token: < your GitHub personal access token here > 
