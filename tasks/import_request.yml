@@ -1,0 +1,44 @@
+- name: Submit request with reference
+  uri:
+    url: "{{ galaxy_protocol }}://{{ galaxy_server }}/api/v1/imports/"
+    body: "github_user={{ item.namespace }}&github_repo={{ item.name }}&github_reference={{ item.reference }}"
+    method: POST
+    HEADER_Authorization: "Token {{ galaxy_token }}" 
+    status_code: 201
+  when: item.reference is defined
+  register: output
+
+- name: Submit request without reference
+  uri:
+    url: "{{ galaxy_protocol }}://{{ galaxy_server }}/api/v1/imports/"
+    body: "github_user={{ item.namespace }}&github_repo={{ item.name }}"
+    method: POST
+    HEADER_Authorization: "Token {{ galaxy_token }}" 
+    status_code: 201
+  when: item.reference is not defined
+  register: output
+
+- name: Set fact for id
+  set_fact:
+    import_id: "{{ output.json.results[0].id }}"    
+
+- name: Wait on status
+  uri:
+    url: "{{ galaxy_protocol }}://{{ galaxy_server}}/api/v1/imports/?id={{ import_id }}"
+  register: result
+  until: result.json.results[0].state not in ['PENDING','RUNNING']
+  retries: 10
+  delay: 6
+  when: galaxy_wait
+  ignore_errors: yes
+
+- name: Show result
+  debug:
+    msg: "Repo: {{ item.namespace }}.{{ item.name }} Import Id: {{ import_id }} State: {{ result.json.results[0].state }}"  
+
+- name: Assert import succeeded
+  assert:
+    msg: "Role import for {{ item.namespace }}.{{ item.name }} failed"
+    that:
+      - result.json.results[0].state == 'SUCCEEDED'
+  when: galaxy_wait and galaxy_assert_success

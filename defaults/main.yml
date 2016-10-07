@@ -1,0 +1,9 @@
+---
+# defaults file for galaxy-import
+
+galaxy_protocol: https                  # http or https
+galaxy_server: galaxy.ansible.com       # galaxy server address
+github_token: ''                        # personal access token from GitHub
+github_repos: []                        # List of repos with namespace, repo and reference attributes
+galaxy_wait: yes                        # whether to wait for imports to finish
+galaxy_assert_success: yes              # stop if a role fails to import

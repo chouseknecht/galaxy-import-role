@@ -1,0 +1,32 @@
+---
+# tasks file for galaxy-import
+
+- name: github_token should be defined
+  assert: 
+    msg: "Value for github_token is required"
+    that:
+      - "github_token != ''" 
+
+- name: github_repos should be a list with length > 0
+  assert:
+    msg: "Expected github_repos to be an array of length > 0"
+    that:
+      - github_repos | length > 0
+
+- name: Get Galaxy token
+  uri:
+    url: "{{ galaxy_protocol }}://{{ galaxy_server }}/api/v1/tokens/"
+    method: POST
+    body: "github_token={{ github_token }}"
+  register: output
+
+- name: Preserve Galaxy token
+  set_fact:
+    galaxy_token: "{{ output.json.token }}"
+
+- name: Show token
+  debug: var=galaxy_token
+
+- name: Submit Galaxy import requests
+  include: import_request.yml
+  with_items: "{{ github_repos }}"
