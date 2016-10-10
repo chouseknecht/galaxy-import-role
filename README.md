@@ -1,7 +1,6 @@
 # galaxy-import-role
 
-Automate importing one or more roles to Galaxy by using the API directly. Does not rely on the ansible-galaxy CLI tool, but instead call Galaxy API endpoints directly.
-
+Automate importing one or more roles to Galaxy. Uses the Galaxy API directly, rather than the `ansible-galaxy` CLI.
 
 ## Requirements
 
