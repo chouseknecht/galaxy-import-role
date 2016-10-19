@@ -4,7 +4,7 @@ Automate importing one or more roles to Galaxy. Uses the Galaxy API directly, ra
 
 ## Requirements
 
-Uses the Ansible uri module to make requests to the Galaxy API. In versions of Ansible prior to 2.1 this required httplib2. With newer versions of Anaible the uri module should just work.
+Uses the [Ansible uri module](http://docs.ansible.com/ansible/uri_module.html) to make requests to the Galaxy API. In versions of Ansible prior to 2.1 this required httplib2. With newer versions of Anaible the uri module should just work.
 
 Authentication to the Galaxy API requires a [GitHub personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
 
