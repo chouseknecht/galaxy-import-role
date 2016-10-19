@@ -1,6 +1,8 @@
 # galaxy-import-role
 
-Automate importing one or more roles to Galaxy. Uses the Galaxy API directly, rather than the `ansible-galaxy` CLI.
+[![Build Status](https://travis-ci.org/chouseknecht/galaxy-import-role.svg?branch=master)](https://travis-ci.org/chouseknecht/galaxy-import-role)
+
+Automate Galaxy role imports by using the Galaxy API directly, rather than the `ansible-galaxy` CLI.
 
 ## Requirements
 
